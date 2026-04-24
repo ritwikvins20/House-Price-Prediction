@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Price Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar-brand { font-weight: bold; font-size: 1.5rem; }
+        .main-card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; text-align: center; }
+        .card-header h3 { margin: 0; font-weight: 600; }
+        .form-control, .form-select { border-radius: 8px; padding: 12px; border: 1px solid #e0e0e0; }
+        .form-control:focus, .form-select:focus { border-color: #764ba2; box-shadow: 0 0 0 0.2rem rgba(118, 75, 162, 0.25); }
+        .btn-predict { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; padding: 12px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; transition: transform 0.2s; }
+        .btn-predict:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4); background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); }
+        .amenities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .form-check { background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #eee; }
+        .result-card { background: #fff; border-left: 5px solid #28a745; }
+        .price-text { font-size: 2rem; font-weight: bold; color: #28a745; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+        <div class="container">
+            <a class="navbar-brand" href="#">🏠 RealEstate AI</a>
+            <div class="d-flex">
+                <span class="navbar-text text-white-50">Powered by Machine Learning</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card main-card">
+                    <div class="card-header">
+                        <h3>Bangalore & Hyderabad Price Estimator</h3>
+                        <p class="mt-2 mb-0 opacity-75">Get an instant valuation using our 85% accurate model</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <form action="/predict" method="POST">
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">City</label>
+                                    <select name="city" id="city" class="form-select" required onchange="updateLocations()"></select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Location</label>
+                                    <select name="location" id="location" class="form-select" required><option value="">Select City First</option></select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Area (Sqft)</label>
+                                    <input type="number" name="area" class="form-control" placeholder="e.g. 1200" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">BHK</label>
+                                    <input type="number" name="bhk" class="form-control" placeholder="e.g. 3" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Resale?</label>
+                                    <select name="resale" class="form-select">
+                                        <option value="0">No (New Property)</option>
+                                        <option value="1">Yes (Resale)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Amenities</label>
+                                <div class="amenities-grid">
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="Gymnasium" id="gym"><label class="form-check-label" for="gym">Gymnasium</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="SwimmingPool" id="pool"><label class="form-check-label" for="pool">Swimming Pool</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="LandscapedGardens" id="garden"><label class="form-check-label" for="garden">Gardens</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="JoggingTrack" id="jog"><label class="form-check-label" for="jog">Jogging Track</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="RainWaterHarvesting" id="rain"><label class="form-check-label" for="rain">Rain Water</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="IndoorGames" id="games"><label class="form-check-label" for="games">Indoor Games</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="ShoppingMall" id="mall"><label class="form-check-label" for="mall">Shopping Mall</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="Intercom" id="intercom"><label class="form-check-label" for="intercom">Intercom</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="SportsFacility" id="sports"><label class="form-check-label" for="sports">Sports Facility</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="ATM" id="atm"><label class="form-check-label" for="atm">ATM</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="ClubHouse" id="club"><label class="form-check-label" for="club">Club House</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="24X7Security" id="security"><label class="form-check-label" for="security">24X7 Security</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="PowerBackup" id="power"><label class="form-check-label" for="power">Power Backup</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="CarParking" id="parking"><label class="form-check-label" for="parking">Car Parking</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="AC" id="ac"><label class="form-check-label" for="ac">AC</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="Wifi" id="wifi"><label class="form-check-label" for="wifi">Wifi</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="LiftAvailable" id="lift"><label class="form-check-label" for="lift">Lift</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="VaastuCompliant" id="vaastu"><label class="form-check-label" for="vaastu">Vaastu</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" value="1" name="GolfCourse" id="golf"><label class="form-check-label" for="golf">Golf Course</label></div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-predict">Estimate Price</button>
+                            </div>
+                        </form>
+
+                        <!-- Result Section -->
+                        {% if prediction_text %}
+                        <div class="card result-card mt-5 shadow-sm border-0">
+                            <div class="card-header bg-white text-center py-3">
+                                <h5 class="text-muted mb-0">Price Estimation Complete</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row align-items-center">
+                                    
+                                    <!-- Left Side: Property Summary -->
+                                    <div class="col-md-7 border-end">
+                                        <h6 class="text-uppercase text-muted small mb-3">Property Details</h6>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between px-0"><span>Location:</span><strong>{{ input_location }}, {{ input_city }}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between px-0"><span>Area:</span><strong>{{ input_area }} Sqft</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between px-0"><span>Configuration:</span><strong>{{ input_bhk }} BHK</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between px-0"><span>Type:</span><strong>{{ input_resale }}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between px-0"><span>Luxury Score:</span><strong>{{ luxury_score }} / 19</strong></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Right Side: Price & Importance -->
+                                    <div class="col-md-5 text-center mt-4 mt-md-0">
+                                        <h6 class="text-uppercase text-muted small mb-2">Estimated Value</h6>
+                                        <h2 class="text-success mb-0" style="font-weight: 800; font-size: 2.2rem;">{{ prediction_text }}</h2>
+                                        <small class="text-muted">Approximate Market Price</small>
+
+                                        <!-- NEW: Feature Importance Section -->
+                                        {% if importance %}
+                                        <hr class="my-3">
+                                        <h6 class="text-uppercase text-muted small mb-2">Key Price Drivers</h6>
+                                        <ul class="list-unstyled text-start small">
+                                            {% for feature, percent in importance %}
+                                            <li class="mb-2">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="fw-bold text-capitalize">{{ feature|replace('_', ' ') }}</span>
+                                                    <span class="text-success fw-bold">{{ percent }}%</span>
+                                                </div>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-light text-center py-3">
+                                 <a href="/" class="btn btn-outline-secondary btn-sm">Predict Another Property</a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                
+                <footer class="text-center mt-4 mb-5 text-muted">
+                    <small>© 2023 House Price Prediction Project. Built with Python & Flask.</small>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const cities = {{ cities | tojson }};
+        const initialLocations = {{ locations | tojson }};
+        const citySelect = document.getElementById('city');
+        const locationSelect = document.getElementById('location');
+
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.text = city;
+            citySelect.appendChild(option);
+        });
+
+        function populateLocations(locs) {
+            locationSelect.innerHTML = ''; 
+            locs.forEach(loc => {
+                const option = document.createElement('option');
+                option.value = loc;
+                option.text = loc;
+                locationSelect.appendChild(option);
+            });
+        }
+
+        function updateLocations() {
+            const city = citySelect.value;
+            fetch(`/get_locations/${city}`)
+                .then(response => response.json())
+                .then(data => { populateLocations(data); })
+                .catch(error => console.error('Error:', error));
+        }
+
+        populateLocations(initialLocations);
+    </script>
+</body>
+</html>
