@@ -1,13 +1,14 @@
 🏠 House Price Prediction Web Application
 
 PythonFlaskMachine Learning
+
 📝 Project Overview
 
 This project is a Machine Learning web application that predicts house prices in Bangalore and Hyderabad. 
 
 The model uses a Gradient Boosting Regressor trained on cleaned real estate data, achieving an accuracy of 84.6%. It features a professional Flask web interface with dynamic location dropdowns and feature importance analysis.
 
-✨ Key Features
+ Key Features
 
     High Accuracy: Focused on specific markets (Bangalore & Hyderabad) for precision.
     Dynamic Dropdowns: Locations automatically update based on the selected city.
@@ -15,14 +16,14 @@ The model uses a Gradient Boosting Regressor trained on cleaned real estate data
     Luxury Score: Aggregates amenities into a single influential feature.
     Professional UI: Modern Bootstrap 5 design.
 
-🛠️ Tech Stack
+ Tech Stack
 
     Backend: Python, Flask
     Frontend: HTML5, CSS3, Bootstrap 5, JavaScript
     Machine Learning: Scikit-Learn, Pandas, NumPy
     Model: Gradient Boosting Regressor
 
-🚀 How to Run Locally
+ How to Run Locally
 
     Clone the repository:
 
@@ -42,7 +43,7 @@ The model uses a Gradient Boosting Regressor trained on cleaned real estate data
 
     Open your browser and go to http://127.0.0.1:5000.
 
-📁 Project Structure
+ Project Structure
 
     server.py: Flask backend to handle requests.
     templates/app.html: Frontend user interface.
@@ -50,17 +51,20 @@ The model uses a Gradient Boosting Regressor trained on cleaned real estate data
     location_stats.json: Data for Location encoding.
     Project.ipynb: Jupyter Notebook with data cleaning and training code.
 
-📊 Model Performance
-Model Used	R² Score
-Linear Regression	78.3%
-Random Forest	81.0%
-Gradient Boosting	84.6%
-👨‍💻 Authors
+ Model Performance
 
-V.Ritwik
-P.Pavan
-V.Manikanta
-D.Satish
+    Model Used	R² Score
+    Linear Regression	78.3%
+    Random Forest	81.0%
+    Gradient Boosting	84.6%
 
-    University Project Submission
+ Authors
+
+    V.Ritwik
+    P.Pavan
+    V.Manikanta
+    D.Satish
+
+University Project Submission
+
     https://github.com/ritwikvins20
