@@ -27,7 +27,7 @@ The model uses a Gradient Boosting Regressor trained on cleaned real estate data
 
     Clone the repository:
 
-        git clone https://github.com/<YOUR-USERNAME>/House-Price-Prediction.git
+        git clone https://github.com/ritwikvins20/House-Price-Prediction.git
 
     Navigate to the folder:
 
