@@ -2,7 +2,7 @@
 
 PythonFlaskMachine Learning
 
-📝 Project Overview
+ Project Overview
 
 This project is a Machine Learning web application that predicts house prices in Bangalore and Hyderabad. 
 
@@ -27,19 +27,19 @@ The model uses a Gradient Boosting Regressor trained on cleaned real estate data
 
     Clone the repository:
 
-    git clone https://github.com/<YOUR-USERNAME>/House-Price-Prediction.git
+        git clone https://github.com/<YOUR-USERNAME>/House-Price-Prediction.git
 
     Navigate to the folder:
 
-    cd House-Price-Prediction
+        cd House-Price-Prediction
 
     Install dependencies:
 
-    pip install -r requirements.txt
+        pip install -r requirements.txt
 
     Run the Flask server:
 
-    python server.py
+        python server.py
 
     Open your browser and go to http://127.0.0.1:5000.
 
