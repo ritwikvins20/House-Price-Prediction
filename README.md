@@ -6,6 +6,7 @@ PythonFlaskMachine Learning
 This project is a Machine Learning web application that predicts house prices in Bangalore and Hyderabad. 
 
 The model uses a Gradient Boosting Regressor trained on cleaned real estate data, achieving an accuracy of 84.6%. It features a professional Flask web interface with dynamic location dropdowns and feature importance analysis.
+
 ✨ Key Features
 
     High Accuracy: Focused on specific markets (Bangalore & Hyderabad) for precision.
@@ -54,9 +55,12 @@ Model Used	R² Score
 Linear Regression	78.3%
 Random Forest	81.0%
 Gradient Boosting	84.6%
-👨‍💻 Author
+👨‍💻 Authors
 
-[Your Name]
+V.Ritwik
+P.Pavan
+V.Manikanta
+D.Satish
 
     University Project Submission
-    [Your GitHub Profile Link]
+    https://github.com/ritwikvins20
